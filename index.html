@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Diya Patel | Birthday</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Inter',sans-serif;
+    background: linear-gradient(135deg,#1d2671,#c33764);
+    color:white;
+    overflow-x:hidden;
+}
+
+h1,h2{
+    font-family:'Playfair Display',serif;
+    letter-spacing:1px;
+}
+
+/* Background */
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:-1;
+}
+
+/* Hero */
+.hero{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    text-align:center;
+}
+
+.hero img{
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    border:3px solid rgba(255,255,255,0.4);
+    backdrop-filter: blur(10px);
+    margin-bottom:20px;
+}
+
+.hero h1{
+    font-size:3.2rem;
+    font-weight:700;
+    text-shadow:0 0 20px rgba(255,255,255,0.3);
+}
+
+#typing{
+    margin-top:10px;
+    font-size:1.2rem;
+    opacity:0.9;
+}
+
+/* Cards */
+.card{
+    max-width:700px;
+    margin:40px auto;
+    padding:30px;
+    border-radius:20px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(15px);
+    box-shadow:0 10px 30px rgba(0,0,0,0.3);
+    transform:translateY(50px);
+    opacity:0;
+    transition:1s;
+}
+
+.card.show{
+    transform:translateY(0);
+    opacity:1;
+}
+
+/* Button */
+.btn{
+    margin-top:20px;
+    padding:12px 25px;
+    border:none;
+    border-radius:25px;
+    background:white;
+    color:#c33764;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.btn:hover{
+    transform:scale(1.1);
+}
+
+/* Surprise */
+#surprise{
+    display:none;
+    margin-top:20px;
+    color:#ffd1dc;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="bg"></canvas>
+
+<!-- Hero -->
+<div class="hero">
+    <img src="diya.jpg" alt="Diya">
+    <h1>Happy Birthday, Diya 🎂</h1>
+    <div id="typing"></div>
+</div>
+
+<!-- About -->
+<div class="card">
+    <h2>About You 💫</h2>
+    <p>
+        You are one of the most kind, strong, and genuine people I know.  
+        But more than that, you are someone who truly cares — like a sister who always looks out for me.
+    </p>
+</div>
+
+<!-- Journey -->
+<div class="card">
+    <h2>Our Journey 🤝</h2>
+    <p>
+        What started as a simple BCA project turned into something much deeper.  
+        Over time, this friendship became a bond that feels like a real brother-sister relationship.  
+        No hesitation, no formality — just pure trust and understanding.
+    </p>
+</div>
+
+<!-- Importance -->
+<div class="card">
+    <h2>Why You Matter ❤️</h2>
+    <p>
+        Whenever I am confused or going through something, you are the first person I turn to.  
+        I can share anything with you without hesitation, and you always guide me honestly.  
+        You correct me when I am wrong, support me when I need it — just like a true sister would.
+    </p>
+</div>
+
+<!-- Final -->
+<div class="card">
+    <h2>Final Message 🎂</h2>
+    <p>
+        Happy Birthday, Diya 🎉  
+        You are not just important to me — you are like a sister to me.  
+        Thank you for always being there, for understanding me, and for guiding me.  
+        I am truly lucky to have you in my life ❤️
+    </p>
+
+    <button class="btn" onclick="showSurprise()">Click for Surprise 🎁</button>
+    <div id="surprise">
+        No matter what happens, you will always be my sister-like best friend ❤️
+    </div>
+</div>
+
+<script>
+/* Typing Effect */
+const texts = [
+"Not just a friend...",
+"But a sister I never had ❤️",
+"My strongest support system ✨"
+];
+
+let i = 0, j = 0;
+
+function type(){
+    if(i < texts.length){
+        if(j < texts[i].length){
+            document.getElementById("typing").innerHTML += texts[i].charAt(j);
+            j++;
+            setTimeout(type,40);
+        }else{
+            document.getElementById("typing").innerHTML += "<br>";
+            i++;
+            j = 0;
+            setTimeout(type,500);
+        }
+    }
+}
+type();
+
+/* Scroll Animation */
+window.addEventListener("scroll",()=>{
+    document.querySelectorAll(".card").forEach(card=>{
+        let top = card.getBoundingClientRect().top;
+        if(top < window.innerHeight - 100){
+            card.classList.add("show");
+        }
+    });
+});
+
+/* Surprise */
+function showSurprise(){
+    document.getElementById("surprise").style.display="block";
+}
+
+/* Particles */
+const canvas = document.getElementById("bg");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+for(let i=0;i<80;i++){
+    particles.push({
+        x:Math.random()*canvas.width,
+        y:Math.random()*canvas.height,
+        r:Math.random()*2,
+        d:Math.random()*1
+    });
+}
+
+function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle="white";
+    particles.forEach(p=>{
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fill();
+    });
+    update();
+}
+
+function update(){
+    particles.forEach(p=>{
+        p.y += p.d;
+        if(p.y > canvas.height){
+            p.y = 0;
+            p.x = Math.random()*canvas.width;
+        }
+    });
+}
+
+setInterval(draw,30);
+</script>
+
+</body>
+</html>
